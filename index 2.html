@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechMarket KZ - Магазин электроники в Казахстане</title>
+    <style>
+        /* Общие стили */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Шапка */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            font-size: 28px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .cart-btn {
+            position: relative;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Герой секция */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #e69009;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: white;
+            color: var(--primary);
+        }
+        
+        /* Категории */
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .category-card h3 {
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .category-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Популярные товары */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding-bottom: 80px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 200px;
+            background-color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .product-image img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: 5px;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .product-price {
+            font-weight: 700;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .product-rating {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .product-description {
+            color: var(--gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .btn-sm {
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+
+        /* Преимущества */
+        .advantages {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .advantage-card {
+            background-color: var(--light);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 200px;
+        }
+        
+        .advantage-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+            font-size: 22px;
+        }
+        
+        .advantage-card p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Подвал */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+        
+        .footer-about p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .footer-contact p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--gray);
+            margin-bottom: 15px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container container">
+            <a href="#" class="logo">
+                <span class="logo-icon">📱</span> TechMarket KZ
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" onclick="showSection('home')">Главная</a></li>
+                    <li><a href="#" onclick="showSection('categories')">Категории</a></li>
+                    <li><a href="#" onclick="showSection('advantages')">Преимущества</a></li>
+                    <li><a href="#" onclick="showSection('contacts')">Контакты</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <button class="cart-btn">
+                    <span>🛒</span>
+                    <span class="cart-count">3</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="container">
+            <h1>Добро пожаловать в TechMarket KZ</h1>
+            <p>Лучшие гаджеты и электроника с доставкой по Казахстану.</p>
+            <a href="#" class="btn">Посмотреть товары</a>
+            <a href="#" class="btn btn-outline">Узнать больше</a>
+        </div>
+    </section>
+
+    <section id="categories" class="section" style="display: none;">
+        <div class="container section-title">
+            <h2>Категории товаров</h2>
+            <p>Мы предлагаем разнообразие товаров для вашего удобства.</p>
+        </div>
+        <div class="container categories">
+            <!-- Пример категории -->
+            <div class="category-card">
+                <div class="category-icon">📱</div>
+                <h3>Смартфоны</h3>
+                <p>Модели последних поколений по доступным ценам.</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">💻</div>
+                <h3>Ноутбуки</h3>
+                <p>Мощные ноутбуки для работы и развлечений.</p>
+            </div>
+            <div class="category-card">
+                <div class="category-icon">⌚</div>
+                <h3>Умные часы</h3>
+                <p>Современные технологии в ваших руках.</p>
+            </div>
+        </div>
+    </section>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="laptop2.jpg" alt="Ноутбук 2">
+        </div>
+        <div class="product-info">
+            <h3>Lenovo IdeaPad</h3>
+            <div class="product-meta">
+                <div class="product-price">140,000 KZT</div>
+                <div class="product-rating">⭐⭐⭐⭐</div>
+            </div>
+            <p class="product-description">Легкий и быстрый ноутбук для студентов и профессионалов.</p>
+            <button class="btn btn-sm">Купить</button>
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="laptop3.jpg" alt="Ноутбук 3">
+        </div>
+        <div class="product-info">
+            <h3>Acer Aspire 5</h3>
+            <div class="product-meta">
+                <div class="product-price">110,000 KZT</div>
+                <div class="product-rating">⭐⭐⭐⭐</div>
+            </div>
+            <p class="product-description">Идеальный ноутбук для дома и офиса.</p>
+            <button class="btn btn-sm">Купить</button>
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="laptop4.jpg" alt="Ноутбук 4">
+        </div>
+        <div class="product-info">
+            <h3>MacBook Air</h3>
+            <div class="product-meta">
+                <div class="product-price">450,000 KZT</div>
+                <div class="product-rating">⭐⭐⭐⭐⭐</div>
+            </div>
+            <p class="product-description">Ультратонкий и мощный ноутбук с Retina дисплеем.</p>
+            <button class="btn btn-sm">Купить</button>
+        </div>
+    </div>
+    <div class="product-card">
+        <div class="product-image">
+            <img src="laptop5.jpg" alt="Ноутбук 5">
+        </div>
+        <div class="product-info">
+            <h3>Asus ZenBook</h3>
+            <div class="product-meta">
+                <div class="product-price">160,000 KZT</div>
+                <div class="product-rating">⭐⭐⭐⭐</div>
+            </div>
+            <p class="product-description">Премиум ноутбук для работы и развлечений.</p>
+            <button class="btn btn-sm">Купить</button>
+        </div>
+    </div>
+</div>
+</section>
+    <section id="advantages" class="section" style="display: none;">
+        <div class="container section-title">
+            <h2>Наши преимущества</h2>
+            <p>Почему стоит выбирать TechMarket KZ</p>
+        </div>
+        <div class="advantages">
+            <div class="advantage-card">
+                <h3>Быстрая доставка</h3>
+                <p>Мы доставляем товары в любой уголок Казахстана за 1–3 дня.</p>
+            </div>
+            <div class="advantage-card">
+                <h3>Гарантия качества</h3>
+                <p>Все товары проходят строгую проверку качества перед отправкой.</p>
+            </div>
+            <div class="advantage-card">
+                <h3>Поддержка клиентов</h3>
+                <p>Наши консультанты всегда готовы помочь вам с выбором и ответить на вопросы.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contacts" class="section" style="display: none;">
+        <div class="container section-title">
+            <h2>Контакты</h2>
+            <p>Свяжитесь с нами любым удобным способом:</p>
+        </div>
+        <div class="container footer-contact">
+            <p>Телефон: +7 701 234 5678</p>
+            <p>Электронная почта: info@techmarket.kz</p>
+            <p>Адрес: Алматы, ул. Панфилова, 123</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-logo">TechMarket KZ</div>
+            <div class="footer-about">
+                <p>Магазин электроники с доставкой по Казахстану.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 TechMarket KZ. Все права защищены.
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Скрыть все секции
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Показать выбранную секцию
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.style.display = 'block';
+            }
+
+            // Обновить активную ссылку в меню
+            const links = document.querySelectorAll('nav a');
+            links.forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`nav a[href='#${sectionId}']`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+
+        // Показываем главную секцию по умолчанию
+        showSection('home');
+    </script>
+</body>
+</html>
